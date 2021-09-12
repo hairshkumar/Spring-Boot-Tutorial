@@ -1,0 +1,12 @@
+{
+	"basePackage": "com.employee.example",
+	"modelPackage": "com.employee.example.model",
+	"apiPackage": "com.employee.example.api",
+	"invokerPackage": "com.employee.example.gen",
+	"configPackage": "com.employee.example.config",
+	"serializableModel": true,
+	"dateLibrary": "java8-localdatetime",
+	"java8": true,
+	"fullJavaUtil": false,
+	"useRuntimeException": false
+}

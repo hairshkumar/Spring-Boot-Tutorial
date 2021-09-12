@@ -1,0 +1,191 @@
+swagger: '2.0'
+info:
+  description: Employee management swagger which contain endpoint to perform CURD operations.
+  version: 1.0.0
+  title: Employee Management System
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: xxx@xxxcompany.com
+host: localhost:8080
+basePath: /employee
+securityDefinitions:
+  basicAuth:
+    type: basic
+security:
+  - basicAuth: []
+schemes:
+  - https
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+parameters:
+  x-requestId:
+    name: x-requestid
+    in: header
+    description: used for logging purpose as unqiue idenfier
+    type: string
+    required: true
+  employeeId:
+    name: employeeid
+    in: path
+    description: employee id
+    type: string
+    required: true
+  employeeRole:
+    name: employeeRole
+    in: query
+    description: role assigned to each employee used to filter out employee based on their role.
+    type: string
+    required: true
+paths:
+  /employee:
+    get:
+      operationId: getEmployee
+      tags:
+        - Employee Retrieval Endpoint
+      summary: Fetch all employee
+      description: Get all employee from the database. 
+      parameters:
+        - $ref: '#/parameters/x-requestId'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Employees'
+        '400':
+          $ref: '#/responses/invalidRequest'
+    post:
+      operationId: addEmployee
+      tags:
+        - Employee Updation Endpoint
+      summary: Add an employee details to DB
+      parameters:
+        - $ref: '#/parameters/x-requestId'
+        - name: employeeDetails
+          in: body
+          description: employee request body
+          required: true
+          schema:
+              $ref: '#/definitions/Employee'
+      responses:
+        '201':
+          description: added successfully
+        '400':
+          $ref: '#/responses/invalidRequest'      
+  '/employee/{employeeid}':
+    get:
+      operationId: getEmployeeBasedOnId
+      tags:
+        - Employee Retrieval Endpoint
+      summary: Fetch employee details based on employee id
+      parameters:
+        - $ref: '#/parameters/x-requestId'
+        - $ref: '#/parameters/employeeId'
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Employee'
+        '400':
+          $ref: '#/responses/invalidRequest'
+        '404':
+          $ref: '#/responses/invalidRequest'
+    put:
+      operationId: updateEmployeeBasedOnId
+      tags:
+        - Employee Updation Endpoint
+      summary: Update an employee details
+      parameters:
+        - $ref: '#/parameters/x-requestId'
+        - name: employeeDetails
+          in: body
+          description: employee request body
+          required: true
+          schema:
+              $ref: '#/definitions/Employee'
+      responses:
+        '204':
+          description: successful updated
+        '400':
+          $ref: '#/responses/invalidRequest'
+        '404':
+          $ref: '#/responses/invalidRequest'
+    delete:
+      operationId: deleteEmployeeBasedOnId
+      tags:
+        - Employee Updation Endpoint
+      summary: Delete an employee details
+      parameters:
+        - $ref: '#/parameters/x-requestId'
+        - $ref: '#/parameters/employeeId'
+      responses:
+        '204':
+          description: successful deleted
+        '400':
+          $ref: '#/responses/invalidRequest'
+        '404':
+          $ref: '#/responses/invalidRequest'
+responses:
+  invalidRequest:
+    description: Request failed on server validation or request is invalid
+    schema:
+      $ref: '#/definitions/ErrorResponse'
+  serverError:
+    description: server is down or unexpected error on server while processing the request.
+    schema:
+      $ref: '#/definitions/ErrorResponse'
+definitions:
+  Employees:
+    type: array
+    items:
+      $ref: '#/definitions/Employee'
+  Employee:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      jobTitle:
+        type: string
+      mobileNo:
+        type: string
+        minLength: 10
+        maxLength: 10
+      joinedDate:
+        type: string
+        format: date
+      gender:
+        type: string
+        enum:
+          - male
+          - female
+          - other
+      salary:
+        type: number
+        format: double
+      department:
+        $ref: '#/definitions/Details'
+      project:
+        $ref: '#/definitions/Details'
+  Details:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+  ErrorResponse:
+    type: object
+    properties:
+      status:
+        type: integer
+      message:
+        type: string
+      reason:
+        type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
