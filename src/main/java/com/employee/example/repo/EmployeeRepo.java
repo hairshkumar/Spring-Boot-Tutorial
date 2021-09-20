@@ -1,14 +1,9 @@
 package com.employee.example.repo;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.stereotype.Repository;
-
 import com.employee.example.model.Employee;
 import com.employee.example.model.Employees;
 
-@Repository
 public class EmployeeRepo {
 
 	private List<Employee> employees = new Employees();
@@ -21,7 +16,7 @@ public class EmployeeRepo {
 		return employees;
 	}
 
-	public void updateEmployeeById(int employeeId,Employee updatedemployee) {
+	public void updateEmployeeDetailsById(int employeeId,Employee updatedemployee) {
 		Employee employee=getEmployeeBasedonId(employeeId);
 		employees.set(employees.indexOf(employee), updatedemployee);
 	}
@@ -30,7 +25,7 @@ public class EmployeeRepo {
 		employees.add(employee);
 	}
 
-	public void deleteEmployeeById(int employeeId) {
+	public void deleteEmployeeDetailsById(int employeeId) {
 		Employee employee=getEmployeeBasedonId(employeeId);
 		employees.remove(employee);
 	}

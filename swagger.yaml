@@ -99,6 +99,7 @@ paths:
       summary: Update an employee details
       parameters:
         - $ref: '#/parameters/x-requestId'
+        - $ref: '#/parameters/employeeId'
         - name: employeeDetails
           in: body
           description: employee request body

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -28,26 +29,6 @@ public class EmployeeApiController implements EmployeeApi {
 	@Autowired
 	private EmployeeManagamentService employeeManagamentService;
 
-	private final ObjectMapper objectMapper;
-
-	private final HttpServletRequest request;
-
-	@org.springframework.beans.factory.annotation.Autowired
-	public EmployeeApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-		this.objectMapper = objectMapper;
-		this.request = request;
-	}
-
-	@Override
-	public Optional<ObjectMapper> getObjectMapper() {
-		return Optional.ofNullable(objectMapper);
-	}
-
-	@Override
-	public Optional<HttpServletRequest> getRequest() {
-		return Optional.ofNullable(request);
-	}
-
 	@Override
 	public ResponseEntity<Employees> getEmployee(
 			@RequestHeader(value = "x-requestid", required = true) String xRequestid) {
@@ -59,7 +40,7 @@ public class EmployeeApiController implements EmployeeApi {
 	public ResponseEntity<Employee> getEmployeeBasedOnId(
 			@RequestHeader(value = "x-requestid", required = true) String xRequestid,
 			@PathVariable("employeeid") String employeeid) {
-		Employee employee = employeeManagamentService.getEmployeeById(Integer.parseInt(employeeid));
+		Employee employee = employeeManagamentService.getEmployeeDetailsById(Integer.parseInt(employeeid));
 		return ResponseEntity.ok().body(employee);
 	}
 
@@ -74,7 +55,7 @@ public class EmployeeApiController implements EmployeeApi {
 	public ResponseEntity<Void> deleteEmployeeBasedOnId(
 			@RequestHeader(value = "x-requestid", required = true) String xRequestid,
 			@PathVariable("employeeid") String employeeid) {
-		employeeManagamentService.deleteEmployeeById(employeeid);
+		employeeManagamentService.deleteEmployeeDetailsById(employeeid);
 		return ResponseEntity.noContent().build();
 	}
 
@@ -82,7 +63,7 @@ public class EmployeeApiController implements EmployeeApi {
 	public ResponseEntity<Void> updateEmployeeBasedOnId(
 			@RequestHeader(value = "x-requestid", required = true) String xRequestid,
 			@Valid @RequestBody Employee employeeDetails) {
-		employeeManagamentService.updateEmployeeById(employeeDetails.getId(),employeeDetails);
+		employeeManagamentService.updateEmployeeDetailsById(employeeDetails.getId(),employeeDetails);
 		return ResponseEntity.noContent().build();
 	}
 

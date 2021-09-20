@@ -13,7 +13,7 @@ public class EmployeeManagamentService {
 
 	private EmployeeRepo employeeRepo=new EmployeeRepo();
 	
-	public Employee getEmployeeById(int employeeId) {
+	public Employee getEmployeeDetailsById(int employeeId) {
 		return employeeRepo.getEmployee(employeeId);
 	}
 	
@@ -22,15 +22,15 @@ public class EmployeeManagamentService {
 		return employees;
 	}
 	    
-	public void updateEmployeeById(int employeeId,Employee updatedEmployee) {
-		employeeRepo.updateEmployeeById(employeeId,updatedEmployee);
+	public void updateEmployeeDetailsById(int employeeId,Employee updatedEmployee) {
+		employeeRepo.updateEmployeeDetailsById(employeeId,updatedEmployee);
 	}
 	
 	public void createEmployee(Employee employee) {
 		employeeRepo.createEmployee(employee);		
 	}
 	
-	public void deleteEmployeeById(String employeeId) {
-		employeeRepo.deleteEmployeeById(Integer.parseInt(employeeId));
+	public void deleteEmployeeDetailsById(String employeeId) {
+		employeeRepo.deleteEmployeeDetailsById(Integer.parseInt(employeeId));
 	}
 }
