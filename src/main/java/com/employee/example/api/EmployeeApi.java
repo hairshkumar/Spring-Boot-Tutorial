@@ -8,6 +8,7 @@ package com.employee.example.api;
 import com.employee.example.model.Employee;
 import com.employee.example.model.Employees;
 import com.employee.example.model.ErrorResponse;
+import com.employee.example.util.ContainValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public interface EmployeeApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<Void> addEmployee(@ApiParam(value = "used for logging purpose as unqiue idenfier" ,required=true) @RequestHeader(value="x-requestid", required=true) String xRequestid,@ApiParam(value = "employee request body" ,required=true )  @Valid @RequestBody Employee employeeDetails) {
+    default ResponseEntity<Void> addEmployee(@ApiParam(value = "used for logging purpose as unqiue idenfier" ,required=true) @Valid @ContainValue @RequestHeader(value="x-requestid", required=true) String xRequestid,@ApiParam(value = "employee request body" ,required=true )  @Valid @RequestBody Employee employeeDetails) {
         if(getObjectMapper().isPresent() && getAcceptHeader().isPresent()) {
         } else {
             log.warn("ObjectMapper or HttpServletRequest not configured in default EmployeeApi interface so no example is generated");

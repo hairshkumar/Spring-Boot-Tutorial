@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.io.Serializable;
+
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -27,6 +28,7 @@ public class Employee  implements Serializable {
   private Integer id = null;
 
   @JsonProperty("name")
+  @NotBlank(message = "Name cannot be empty or blank")
   private String name = null;
 
   @JsonProperty("jobTitle")
@@ -72,6 +74,7 @@ public class Employee  implements Serializable {
   }
 
   @JsonProperty("gender")
+  @NotNull
   private GenderEnum gender = null;
 
   @JsonProperty("salary")

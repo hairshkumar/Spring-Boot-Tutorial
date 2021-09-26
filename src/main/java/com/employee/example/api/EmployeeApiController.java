@@ -3,6 +3,7 @@ package com.employee.example.api;
 import com.employee.example.model.Employee;
 import com.employee.example.model.Employees;
 import com.employee.example.service.EmployeeManagamentService;
+import com.employee.example.util.ContainValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
@@ -45,7 +46,7 @@ public class EmployeeApiController implements EmployeeApi {
 	}
 
 	@Override
-	public ResponseEntity<Void> addEmployee(@RequestHeader(value = "x-requestid", required = true) String xRequestid,
+	public ResponseEntity<Void> addEmployee(@Valid @ContainValue @RequestHeader(value = "x-requestid", required = true) String xRequestid,
 			@Valid @RequestBody Employee employeeDetails) {
 		employeeManagamentService.createEmployee(employeeDetails);
 		return ResponseEntity.noContent().build();
