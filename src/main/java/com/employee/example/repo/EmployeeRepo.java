@@ -1,12 +1,18 @@
 package com.employee.example.repo;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
 import com.employee.example.model.Employee;
 import com.employee.example.model.Employees;
 
+@Repository
 public class EmployeeRepo {
 
-	private List<Employee> employees = new Employees();
+	private List<Employee> employees = new ArrayList<>();
 
 	public Employee getEmployee(int employeeId) {
 		return getEmployeeBasedonId(employeeId);

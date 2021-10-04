@@ -1,36 +1,41 @@
 package com.employee.example.service;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.employee.example.model.Employee;
 import com.employee.example.model.Employees;
-import com.employee.example.repo.EmployeeRepo;
+import com.employee.example.repo.EmployeeRepository;
 
 @Service
 public class EmployeeManagamentService {
 
-	private EmployeeRepo employeeRepo=new EmployeeRepo();
-	
+	@Autowired
+	private EmployeeRepository employeeRepo;
+
 	public Employee getEmployeeDetailsById(int employeeId) {
-		return employeeRepo.getEmployee(employeeId);
+		return employeeRepo.findById(employeeId).get();
 	}
-	
+
 	public Employees getEmployees() {
-		Employees employees=(Employees) employeeRepo.getEmployees();
+		Employees employees=new Employees();
+		employees.setEmployees(employeeRepo.findAll());
 		return employees;
 	}
-	    
-	public void updateEmployeeDetailsById(int employeeId,Employee updatedEmployee) {
-		employeeRepo.updateEmployeeDetailsById(employeeId,updatedEmployee);
+
+	public void updateEmployeeDetailsById(int employeeId, Employee updatedEmployee) {
+		employeeRepo.save(updatedEmployee);
 	}
-	
+
 	public void createEmployee(Employee employee) {
-		employeeRepo.createEmployee(employee);		
+		employeeRepo.save(employee);
 	}
-	
+
 	public void deleteEmployeeDetailsById(String employeeId) {
-		employeeRepo.deleteEmployeeDetailsById(Integer.parseInt(employeeId));
+		employeeRepo.deleteById(Integer.valueOf(employeeId));
 	}
 }
